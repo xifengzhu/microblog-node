@@ -1,10 +1,45 @@
- <!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title><%= title %></title>
-	<link rel='stylesheet' href='/stylesheets/style.css' /> 6
-￼  </head>
- <body>
-    <%- body %>
-  </body>
+￼￼<title><%= title %> - Microblog</title>
+	<link rel='stylesheet' href='/stylesheets/bootstrap.css' /> 
+	<style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+		} 
+	</style>
+	<link href="/stylesheets/bootstrap-theme.css" rel="stylesheet"> 
+</head>
+<body>
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+		<div class="container">
+		  <div class="navbar-header">
+		    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>
+		    <a href="../" class="navbar-brand">Microblog</a>
+		  </div>
+		  <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+		    <ul class="nav navbar-nav">
+		      <li class="active">
+						<a href="/">首页</a>
+					</li> 
+					<li><a href="/login">登入</a></li>
+					<li><a href="/reg">注册</a></li>
+		    </ul>
+		  </nav>
+		</div>
+	</header>
+	<div id="container" class="container">
+  	<%- body %>
+￼   <hr />
+    <footer>
+			<p><a href="http://www.byvoid.com/" target="_blank">xifengzhu</a> 2012</p> </footer>
+  </div>
+</body>
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
 </html>
