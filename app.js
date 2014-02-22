@@ -11,6 +11,7 @@ var path = require('path');
 var util = require('util');
 var MongoStore = require('connect-mongo')(express);
 var settings = require("./settings");
+var flash = require('connect-flash');
 partials = require('express-partials');
 
 var app = express();
@@ -21,7 +22,10 @@ app.use(partials());
 app.configure(function(){
 	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'ejs');
-	app.use(express.bodyParser()); 
+	app.use(flash());
+	// app.use(express.bodyParser());
+	app.use(express.json());
+  app.use(express.urlencoded()); 
 	app.use(express.methodOverride()); 
 	app.use(express.cookieParser()); 
 	app.use(express.session({
@@ -30,6 +34,12 @@ app.configure(function(){
       db: settings.db
     })
 	}));
+	app.use(function(req, res, next){
+		res.locals.error = req.flash('error').toString();
+		res.locals.success = req.flash('success').toString();
+		res.locals.user = req.session ? req.session.user : null;
+		next();
+	});
 	app.use(app.router); 
 	app.use(express.static(__dirname + '/public'));
 })
@@ -42,25 +52,18 @@ app.set('view options',{ layout: true});
 
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.json());
+// app.use(express.urlencoded());
 app.use(express.methodOverride());
 // app.use(app.router);
 // app.use(express.static(path.join(__dirname, 'public')));
+
+routes(app);
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-
-app.get('/', routes.index);
-app.get('/u/:users', routes.user);
-app.post('/post', routes.post);
-app.get('/reg', routes.doReg);
-app.get('/login', routes.login);
-app.post('/login',routes.doLogin);
-app.get('logout', routes.logout);
 
 
 http.createServer(app).listen(app.get('port'), function(){
