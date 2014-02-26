@@ -31,7 +31,7 @@ Post.prototype.save = function save(callback) {
 			}
 
 			//为user添加索引
-			collection.ensureIndex('user');
+			collection.ensureIndex('user',{w: 0});
 			//写入一条post
 			collection.insert(post, {safe: true}, function(err,post){
 				mongodb.close();
@@ -66,7 +66,8 @@ Post.get = function get(username, callback){
 
 				var posts = [];
 				docs.forEach(function(doc, index){
-					doc.push(post);
+					var post = new Post(doc.user, doc.post, doc.time)
+					posts.push(post);
 				});
 				callback(null, posts);
 			});

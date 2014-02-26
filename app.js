@@ -25,7 +25,7 @@ app.configure(function(){
 	app.use(flash());
 	// app.use(express.bodyParser());
 	app.use(express.json());
-  app.use(express.urlencoded()); 
+  	app.use(express.urlencoded()); 
 	app.use(express.methodOverride()); 
 	app.use(express.cookieParser()); 
 	app.use(express.session({
